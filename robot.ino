@@ -3,7 +3,7 @@ int ingress_ref = 0;
 int egress_ref = 0;
 
 bool geodinium_detected(int sensor_value, int ref) {
-  int constexpr threshold = 5;
+  int constexpr threshold = 6;
   return abs(sensor_value - ref) > threshold;
 }
 
@@ -27,11 +27,11 @@ void motor_set(int pin, float duty) {
 }
 
 void direct_motor_geodinium() {
-  motor_set(7, 0.027);
+  motor_set(7, .065);
 }
 
 void direct_motor_nebulite() {
-  motor_set(7, 0.122);
+  motor_set(7, .087);
 }
 
 void setup() {
@@ -49,11 +49,20 @@ void setup() {
   Serial.println(ingress_ref);
   Serial.print("Egress ref: ");
   Serial.println(egress_ref);
+
+  motor_set(7, .0745);
+  delay(500);
+  direct_motor_nebulite();
 }
 
 void loop() {
   int ingress = analogRead(A0);
   int egress = analogRead(A1);
+
+  Serial.print(ingress);
+  Serial.print(", ");
+  Serial.print(egress);
+  Serial.println();
 
   if (geodinium_detected(egress, egress_ref) && geodinium_entered) {
     geodinium_entered = false;
