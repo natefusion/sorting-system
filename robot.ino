@@ -31,7 +31,7 @@ void direct_motor_geodinium() {
 }
 
 void direct_motor_nebulite() {
-  motor_set(7, .087);
+  motor_set(7, .084);
 }
 
 void setup() {
@@ -58,11 +58,6 @@ void setup() {
 void loop() {
   int ingress = analogRead(A0);
   int egress = analogRead(A1);
-
-  Serial.print(ingress);
-  Serial.print(", ");
-  Serial.print(egress);
-  Serial.println();
 
   if (geodinium_detected(egress, egress_ref) && geodinium_entered) {
     geodinium_entered = false;
